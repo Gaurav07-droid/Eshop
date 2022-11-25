@@ -1,0 +1,41 @@
+extends base
+
+include _reviewCard     
+
+block Content
+    section.product
+        div(class="product__photo")
+            .photo-container
+                .photo-main
+                    img.product-Image(src=`/img/productimage/${product.images[0]}`, alt="product image")
+                          
+        div(class="product__info")
+            .title
+                h1 #{product.name}
+                span CODE: 20256
+            .price
+                span ₹ #{product.price}/-
+            .discount  
+                strike
+                    |RS #{ product.discount+product.price}/-                   
+            .description
+                h3.heading-highlights Highlights
+                ul.highlights
+                    each high in product.highlights[0].split(',')
+                        li= `${high}`
+            .product-description
+                h3.heading-highlights Description
+                p #{product.description}
+        .btn-container
+            if user                                  
+                btn.btn-add-to-cart(href='/' data-proId=`${product.id}`) ADD TO CART
+                btn.btn-buy#book-product( data-proId=`${product.id}`) BUY NOW
+            else    
+                a.add-to-cart(href='/api/v1/user/login') ADD TO CART
+                
+
+    section.section-reviews 
+        .reviews
+             each review in reviews
+                +reviewCard(review)        
+

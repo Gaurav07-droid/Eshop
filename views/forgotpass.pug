@@ -1,0 +1,11 @@
+extends base    
+
+block Content
+    main.main
+        .user-view__form-container#forgot-pass
+            h2.heading-secondary.ma-bt-md Enter email and check you mail 
+            form.form#forgotpass-form
+                .form__group
+                    label.form__label(for='email') Email address
+                    input#email.form__input(type='email', placeholder='you@example.com', required)
+                

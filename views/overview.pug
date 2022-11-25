@@ -1,0 +1,35 @@
+extends base
+
+mixin cardData(type)
+    .card__data
+        svg.card__icon
+            use(xlink:href=`₹`)
+        span= type
+
+mixin navigation(link,icon,text)
+    li.side-nav 
+        a(href=`${link}`)
+            svg
+                use()
+            |#{text}
+
+block Content
+        main.main
+            a(href='/api/v1/categories')    
+                img.sale-banner(src="https://www.victoriassecret.com/images/vsweb/8a4346f0-9ede-4217-b990-12f49c54f053/072722-sale-desktop.jpg")
+            .card-container
+                each category in categories
+                    .card
+                        .card__header
+                            .card__picture
+                                .card__picture-overlay &nbsp;
+                                a(href=`/api/v1/${category.name}/products`)
+                                    img.card__picture-img(src=`/img/categoryImage/${category.imageCover}` alt=`image-product`)
+                            h3.heading-tertirary
+                                span= category.name
+                        .card__details
+                            //- p.card__text Breathtaking hike through the Canadian Banff National Park
+                            +cardData('Starting from' )
+                            +cardData(`₹${category.minPrice}`)
+                            //- +cardData('call',product.contact
+                        a.btn-view(href=`/api/v1/${category.name}/products`) check it out 

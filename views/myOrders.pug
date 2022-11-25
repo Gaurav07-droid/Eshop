@@ -1,0 +1,15 @@
+extends base
+
+block Content
+    .reviews
+        each order in orders
+            .card.allProduct
+                .card__header
+                    .card__picture
+                        .card__picture-overlay &nbsp;
+                            img.card__picture-img(src=`/img/productimage/${order.product.images[0]}` alt=`image-product`)
+                    h3.heading-tertirary
+                        span.nameProd #{order.product.name}    
+                .card__details
+                a.btn-view(href=`/api/v1/${order.product.categeory}/product/${order.product.id}`) Buy again
+                a.btn-review(href=`/api/v1/products/${order.product.id}/review`) Rate and review

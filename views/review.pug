@@ -1,0 +1,24 @@
+extends base
+
+block Content
+    form#feedback()
+        .pinfo Rate our product.
+        .form-group
+            .col-md-4.inputGroupContainer
+                .input-group
+                    span.input-group-addon
+                        i.fa.fa-heart
+                    select#rate.form-control
+                        option(value="1star") 1
+                        option(value="2stars") 2
+                        option(value="3stars") 3
+                        option(value="4stars") 4
+                        option(value="5stars") 5
+        .pinfo Write your feedback.
+        .form-group
+            .col-md-4.inputGroupContainer
+                .input-group
+                    span.input-group-addon
+                        i.fa.fa-pencil
+                    textarea#review.form-control(rows="3")
+        button.btn.btn-primary#reviewbtn(data-proid=`${proId}`) Submit

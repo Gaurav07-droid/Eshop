@@ -1,0 +1,29 @@
+extends base
+
+mixin cardData(type)
+    .card__data
+        svg.card__icon
+            use(xlink:href=`₹`)
+        span= type
+
+block Content
+        .card-product
+            each product in category.products
+                .card.allProduct
+                    .card__header
+                        .card__picture
+                            .card__picture-overlay &nbsp;
+                            a(href=`/api/v1/${category.name}/product/${product.id}`)
+                                img.card__picture-img(src=`/img/productimage/${product.images[0]}` alt=`image-product`)
+                        h3.heading-tertirary
+                        if product.name.length<30
+                            span.nameProd #{product.name}
+                        else
+                            span.nameProd= `${product.name.slice(1,30)}...`    
+                    .card__details
+                        //- p.card__text Breathtaking hike through the Canadian Banff National Park
+                        +cardData(`₹ ${product.price}`)
+                        +cardData(`off ₹${Math.round(product.discount)}`)
+                        //- +cardData('call',product.contact
+                    a.btn-view(href=`/api/v1/${category.name}/product/${product.id}`) More
+                        
