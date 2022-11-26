@@ -3,9 +3,11 @@ const stripe = require('stripe')(
 );
 const Product = require('../models/productModel');
 const Order = require('../models/orderModel');
+const User = require('../models/userModel');
 
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const Email = require('../utils/Email');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   //get the product booked
@@ -53,8 +55,12 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 
 exports.createOrderCheckout = catchAsync(async (req, res, next) => {
   const { product, user, price } = req.query;
-
+  const url = `${req.protocol}://${req.get('host')}/api/v1/my-orders`;
   if (!product && !user && !price) return next();
+
+  const theCustomer = await User.findById(user);
+  const theProduct = await Product.findById(product).select('name price');
+  await new Email(theCustomer, theProduct).sendOrderSuccess();
   await Order.create({ product, user, price });
 
   res.redirect(req.originalUrl.split('?')[0]);

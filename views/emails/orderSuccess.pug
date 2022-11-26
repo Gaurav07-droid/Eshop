@@ -1,0 +1,17 @@
+extends baseEmail
+
+block Content
+    p Hi #{firstname},
+    p Your order for #{url.name}, amount #{url.price} was  successfully placed.
+    p Your order will be delivered soon.Thank you for choosing Eshop24
+    table.btn.btn-primary(role="presentation", border="0", cellpadding="0", cellspacing="0")
+        tbody
+            tr
+                td(align="left")
+                    table(role="presentation", border="0", cellpadding="0", cellspacing="0")
+                        tbody
+                            tr
+                                td
+                                    a() Go to you orders
+    p If you need any help!Please contact us on
+    p Eshop.cutomercare.in

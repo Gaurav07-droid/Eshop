@@ -59,4 +59,8 @@ module.exports = class Email {
       'Your Reset password token (valid for 10 minutes only)'
     );
   }
+
+  sendOrderSuccess() {
+    this.send('orderSuccess', 'Your order was placed! Eshop24');
+  }
 };
