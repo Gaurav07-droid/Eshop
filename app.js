@@ -12,6 +12,7 @@ const hpp = require('hpp');
 const cors = require('cors');
 
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -27,6 +28,8 @@ const bookingRouter = require('./routes/bookingRoutes');
 // const { json } = require('express');
 
 const app = express();
+
+app.enable('trust proxy');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -57,7 +60,9 @@ app.use(mongoSanitize());
 
 app.use(cors());
 app.options('*', cors());
-// app.use('/api', apiLimiter);
+app.use('/api', apiLimiter);
+
+app.use(compression());
 
 //Routes
 app.use('/', viewRouter);
@@ -75,19 +80,3 @@ app.all('*', (req, res, next) => {
 app.use(globalErrorHandler);
 
 module.exports = app;
-
-/*
-
-const restrictTo=(...roles)=>{
-  
-  return (req,res,next)=>{
-    if(!roles.includes(req.user.role)){
-      next(new AppError('You are not authorize to perform this action',401))
-    }
-  }
-}
-crypto.randomBytes(32).toString('hex')
-
-
-crypto.createHash('sha256').update(req.params.token).digest('hex)
-*/

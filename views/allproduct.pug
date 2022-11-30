@@ -13,7 +13,7 @@ block Content
                     .card__header
                         .card__picture
                             .card__picture-overlay &nbsp;
-                            a(href=`/api/v1/${category.name}/product/${product.id}`)
+                            a(href=`/${category.name}/product/${product.id}`)
                                 img.card__picture-img(src=`/img/productimage/${product.images[0]}` alt=`image-product`)
                         h3.heading-tertirary
                         if product.name.length<30
@@ -25,5 +25,5 @@ block Content
                         +cardData(`₹ ${product.price}`)
                         +cardData(`off ₹${Math.round(product.discount)}`)
                         //- +cardData('call',product.contact
-                    a.btn-view(href=`/api/v1/${category.name}/product/${product.id}`) More
+                    a.btn-view(href=`/${category.name}/product/${product.id}`) More
                         

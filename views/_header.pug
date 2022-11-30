@@ -1,7 +1,7 @@
 header.header 
     nav.nav.nav--tours
     .header__logo
-        a(href="/api/v1/categories")
+        a(href="/categories")
             img.logo(src="/img/Logoname.png")
         form.formSearch(action="/categories")
             input.input-search(type="text", placeholder="Search product here....", name="search")
@@ -9,9 +9,9 @@ header.header
     nav.nav.nav--user
         if user
             btn.nav__el.nav__el--logout#log-out Log out
-            a.nav__el(href='/api/v1/my-account')
+            a.nav__el(href='/my-account')
                 //- img.nav__user-img(src=`/img/users/${user.profileImage}` alt=`${user.name}`)
                 span= user.name.split(' ')[0]
         else
-            a.nav__el(href='/api/v1/user/login') Log in
-            a.nav__el.nav__el--cta(href='/api/v1/user/signup') Create Account
+            a.nav__el(href='/user/login') Log in
+            a.nav__el.nav__el--cta(href='/user/signup') Create Account

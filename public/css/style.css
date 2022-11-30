@@ -1868,3 +1868,21 @@ footer {
   width: 625px;
   /* margin-top: 10px; */
 }
+
+.error-mssg-para {
+  color: orange;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.error-heading {
+  color: orange;
+  font-size: 25px;
+}
+
+.back-home {
+  color: orange;
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 25px;
+}

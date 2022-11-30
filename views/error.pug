@@ -1,11 +1,10 @@
 extends base
+
 block Content
-    h1 404
-    .cloak__wrapper
-        .cloak__container
-            .cloak
-    .info
-        h2 Oops can't find this page
-        p.
-            We're fairly sure that page used to be here, but seems to have gone missing. We do apologise on it's behalf.
-        a(href="/"  rel="noreferrer noopener") Home
+    main.main
+        .error  
+            .error-title
+                h1.heading-secondary.heading-secondary--error Uh oh! Something went wrong! 
+                h2.error__emoji 😥😮
+            .error__msg= mssg
+            a.back-home(href="/categories"  rel="noreferrer noopener") Go to home

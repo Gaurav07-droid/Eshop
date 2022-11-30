@@ -12,17 +12,23 @@ module.exports = class Email {
 
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
-      return 1;
+      return nodemailer.createTransport({
+        service: 'Sendinblue',
+        auth: {
+          user: process.env.SENDGRID_USERNAME,
+          pass: process.env.SENDGRID_PASSWORD,
+        },
+      });
+    } else {
+      return nodemailer.createTransport({
+        host: process.env.Email_host,
+        port: process.env.Email_port,
+        auth: {
+          user: process.env.Auth_Email,
+          pass: process.env.Auth_Pass,
+        },
+      });
     }
-
-    return nodemailer.createTransport({
-      host: process.env.Email_host,
-      port: process.env.Email_port,
-      auth: {
-        user: process.env.Auth_Email,
-        pass: process.env.Auth_Pass,
-      },
-    });
   }
 
   send(template, subject) {

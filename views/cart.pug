@@ -7,11 +7,11 @@ block Content
                         .card__header
                             .card__picture
                                 .card__picture-overlay &nbsp;
-                                a(href=`/api/v1/${product.product.categeory}/product/${product.product.id}`)
+                                a(href=`/${product.product.categeory}/product/${product.product.id}`)
                                     img.card__picture-img(src=`/img/productimage/${product.product.images[0]}` alt=`image-product`)
                             h3.heading-tertirary
                                 span.nameProd #{product.product.name}    
                         .card__details
-                        a.btn-view(href=`/api/v1/${product.product.categeory}/product/${product.product.id}`) More
+                        a.btn-view(href=`/${product.product.categeory}/product/${product.product.id}`) More
                         btn.btn-remove(data-proid=`${product.id}`) Remove
 

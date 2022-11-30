@@ -99,8 +99,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
       )
     );
 
-  console.log(req.file);
-
   const filterBody = filterObject(req.body, 'name', 'email');
   if (req.file) filterBody.profileImage = req.file.filename;
 

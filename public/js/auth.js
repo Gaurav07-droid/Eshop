@@ -6,7 +6,7 @@ export const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/users/login',
+      url: '/api/v1/users/login',
       data: {
         email,
         password,
@@ -16,7 +16,7 @@ export const login = async (email, password) => {
     if (res.data.status === 'success') {
       showAlert('success', 'Logged in successfully');
       window.setTimeout(() => {
-        window.location.assign('/api/v1/categories');
+        window.location.assign('/categories');
       }, 2000);
     }
   } catch (err) {
@@ -27,7 +27,7 @@ export const login = async (email, password) => {
 export const logout = async () => {
   try {
     const res = await axios({
-      url: 'http://127.0.0.1:3000/api/v1/users/logout',
+      url: '/api/v1/users/logout',
       method: 'GET',
     });
 
@@ -35,11 +35,11 @@ export const logout = async () => {
       showAlert('success', 'Logging you out !');
 
       window.setTimeout(() => {
-        window.location.assign('/api/v1/user/login');
+        window.location.assign('/user/login');
       }, 2000);
     }
   } catch (err) {
-    console.log(err);
+    showAlert('error', 'Something went wrong !');
   }
 };
 
@@ -47,7 +47,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/users/signup',
+      url: '/api/v1/users/signup',
       data: {
         name,
         email,
@@ -59,11 +59,11 @@ export const signup = async (name, email, password, passwordConfirm) => {
     if (res.data.status === 'success') {
       showAlert('success', 'Account created successfully!');
       window.setTimeout(() => {
-        window.location.assign('/api/v1/categories');
+        window.location.assign('/categories');
       }, 1500);
     }
   } catch (err) {
-    console.log(err);
+    showAlert('error', err.response.data.message);
   }
 };
 
@@ -74,7 +74,7 @@ export const updatePassword = async (
 ) => {
   try {
     const res = await axios({
-      url: 'http://127.0.0.1:3000/api/v1/users/updateMyPassword',
+      url: '/api/v1/users/updateMyPassword',
       method: 'PATCH',
       data: { currentPassword, newPassword, passwordConfirm },
     });
@@ -83,18 +83,18 @@ export const updatePassword = async (
       showAlert('success', 'Password has been updated!');
 
       window.setTimeout(() => {
-        window.location.reload();
+        window.location.assign('/my-account');
       }, 2000);
     }
   } catch (err) {
-    console.log(err);
+    showAlert('error', err.response.data.message);
   }
 };
 
 export const updateMe = async (data) => {
   try {
     const res = await axios({
-      url: 'http://127.0.0.1:3000/api/v1/users/updateMe',
+      url: '/api/v1/users/updateMe',
       method: 'PATCH',
       data,
     });
@@ -107,14 +107,14 @@ export const updateMe = async (data) => {
       }, 2000);
     }
   } catch (err) {
-    console.log(err);
+    showAlert('error', err.response.data.message);
   }
 };
 
 export const forgotPassword = async (email) => {
   try {
     const res = await axios({
-      url: 'http://127.0.0.1:3000/api/v1/users/forgotPassword',
+      url: '/api/v1/users/forgotPassword',
       method: 'POST',
       data: {
         email,
@@ -125,19 +125,18 @@ export const forgotPassword = async (email) => {
       showAlert('success', 'Token sent to mail!');
 
       window.setTimeout(() => {
-        window.location.assign('/api/v1/reset-password');
+        window.location.assign('/reset-password');
       }, 2000);
     }
   } catch (err) {
-    console.log(err);
-    showAlert('success', 'Token sent to mail!');
+    showAlert('error', 'Something went wrong! Please try again later');
   }
 };
 
 export const resetPassword = async (token, newPassword, passwordConfirm) => {
   try {
     const res = await axios({
-      url: `http://127.0.0.1:3000/api/v1/users/resetPassword/${token}`,
+      url: `/api/v1/users/resetPassword/${token}`,
       method: 'PATCH',
       data: {
         newPassword,
@@ -149,11 +148,10 @@ export const resetPassword = async (token, newPassword, passwordConfirm) => {
       showAlert('success', 'Password updated sucessfully!');
 
       window.setTimeout(() => {
-        window.location.assign('/api/v1/categories');
+        window.location.assign('/categories');
       }, 2000);
     }
   } catch (err) {
-    console.log(err);
-    showAlert('success', err.response.data.message);
+    showAlert('error', err.response.data.message);
   }
 };

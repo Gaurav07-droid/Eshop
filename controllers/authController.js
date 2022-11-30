@@ -31,15 +31,16 @@ const sendSignedToken = function (req, user, statusCode, res) {
       Date.now() + process.env.JWT_Cookie_ExpiresIn * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    secure: req.secure || req.headers('x-forwarded-proto') === 'https',
   };
   // if (req.secure || req.headers('x-forwarded-proto') === 'https')
   //   cookieOptions.secure = true;
 
-  const cookieRes = res.cookie('jwt', token, cookieOptions);
+  res.cookie('jwt', token, cookieOptions);
 
-  if (process.env.NODE_ENV === 'production') {
-    cookieRes.secure = true;
-  }
+  // if (process.env.NODE_ENV === 'production') {
+  //   cookieRes.secure = true;
+  // }
 
   res.password = undefined;
 

@@ -75,23 +75,23 @@ productSchema.index({ price: 1, ratingsAverage: -1, categeory: 1 });
 // });
 
 //query middleware
-productSchema.pre(/^find/, function (next) {
-  this.start = Date.now();
-  next();
-});
+// productSchema.pre(/^find/, function (next) {
+//   this.start = Date.now();
+//   next();
+// });
 
-productSchema.post(/^find/, function () {
-  console.log(`Query took ${Date.now() - this.start} miliseconds`);
-});
+// productSchema.post(/^find/, function () {
+//   console.log(`Query took ${Date.now() - this.start} miliseconds`);
+// });
 
-productSchema.pre('aggregate', function (next) {
-  console.log(
-    this.pipeline().unshift({ $match: { categeory: { $ne: 'footwear' } } })
-  );
-  console.log(this.pipeline());
+// productSchema.pre('aggregate', function (next) {
+//   console.log(
+//     this.pipeline().unshift({ $match: { categeory: { $ne: 'footwear' } } })
+//   );
+//   console.log(this.pipeline());
 
-  next();
-});
+//   next();
+// });
 
 const Product = mongoose.model('Product', productSchema);
 

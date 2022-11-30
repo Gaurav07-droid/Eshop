@@ -2,7 +2,6 @@ const app = require('./app.js');
 const mongoose = require('mongoose');
 
 process.on('uncaughtException', (err) => {
-  console.log(err.name, err);
   console.log('Unhandled exception! 💥💥 shutting down...');
   server.close(() => {
     process.exit(1);
@@ -25,9 +24,15 @@ const server = app.listen(port, () => {
 });
 
 process.on('unhandledRejection', (err) => {
-  console.log(err, err.message);
   console.log('Unhandled rejection !💥💥 shutting down...');
   server.close(() => {
     process.exit(1);
+  });
+});
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM FOUND! 💥');
+  server.close(() => {
+    console.log('process terminated 💥💥');
   });
 });

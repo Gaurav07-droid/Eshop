@@ -15,7 +15,7 @@ mixin navigation(link,icon,text)
 
 block Content
         main.main
-            a(href='/api/v1/categories')    
+            a(href='/categories')    
                 img.sale-banner(src="https://www.victoriassecret.com/images/vsweb/8a4346f0-9ede-4217-b990-12f49c54f053/072722-sale-desktop.jpg")
             .card-container
                 each category in categories
@@ -23,7 +23,7 @@ block Content
                         .card__header
                             .card__picture
                                 .card__picture-overlay &nbsp;
-                                a(href=`/api/v1/${category.name}/products`)
+                                a(href=`/${category.name}/products`)
                                     img.card__picture-img(src=`/img/categoryImage/${category.imageCover}` alt=`image-product`)
                             h3.heading-tertirary
                                 span= category.name
@@ -32,4 +32,4 @@ block Content
                             +cardData('Starting from' )
                             +cardData(`₹${category.minPrice}`)
                             //- +cardData('call',product.contact
-                        a.btn-view(href=`/api/v1/${category.name}/products`) check it out 
+                        a.btn-view(href=`/${category.name}/products`) check it out 

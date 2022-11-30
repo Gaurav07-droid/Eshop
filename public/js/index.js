@@ -52,7 +52,7 @@ const getSearchResults = async (query) => {
       // window.location.assign('/api/v1/home');
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 

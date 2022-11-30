@@ -14,7 +14,7 @@ const handleJWTExpireError = () => {
 };
 
 const handleCastError = (err) => {
-  return new AppError(`Invalid ${err.path}: ${err.value}`, 404);
+  return new AppError(`No product found with that product address.`, 404);
 };
 
 const handleDuplicateFieldsError = (err) => {
@@ -23,27 +23,50 @@ const handleDuplicateFieldsError = (err) => {
   return new AppError(message, 400);
 };
 
-const sendErrorDev = (err, res) => {
-  res.status(err.statusCode).json({
-    status: err.status,
-    error: err,
-    message: err.message,
-    stack: err.stack,
-  });
-};
-
-const sendErrorProd = (err, res) => {
-  if (err.isOperational) {
+const sendErrorDev = (err, req, res) => {
+  if (req.originalUrl.startsWith('/api')) {
     res.status(err.statusCode).json({
       status: err.status,
+      error: err,
       message: err.message,
+      stack: err.stack,
     });
   } else {
-    // console.log('Error💥💥', err);
-    res.status(500).json({
-      status: 'error',
-      message: 'Something went very wrong!',
+    res.status(err.statusCode).render('error', {
+      title: 'Something went wrong!',
+      mssg: err.message,
     });
+  }
+};
+
+const sendErrorProd = (err, req, res) => {
+  if (req.originalUrl.startsWith('/api')) {
+    if (err.isOperational) {
+      res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+      });
+    } else {
+      // console.log('Error💥💥', err);
+      res.status(500).json({
+        status: 'error',
+        message: 'Something went very wrong!',
+      });
+    }
+  } else {
+    if (err.isOperational) {
+      console.log(err.name);
+      res.status(err.statusCode).render('error', {
+        title: 'Something went wrong!',
+        mssg: err.message,
+      });
+    } else {
+      // console.log('Error💥💥', err);
+      res.status(500).render('error', {
+        title: 'Something went wrong!',
+        message: 'Please try again later.',
+      });
+    }
   }
 };
 
@@ -52,7 +75,7 @@ const globalErrorHandler = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, res);
+    sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === 'production') {
     // let error = { ...err };
     if (err.name === 'CastError') err = handleCastError(err);
@@ -61,7 +84,7 @@ const globalErrorHandler = (err, req, res, next) => {
     if (err.name === 'JsonWebTokenError') err = handleJWTError();
     if (err.name === 'TokenExpiredError') err = handleJWTExpireError();
 
-    sendErrorProd(err, res);
+    sendErrorProd(err, req, res);
   }
 };
 

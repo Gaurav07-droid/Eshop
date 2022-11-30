@@ -4,6 +4,7 @@ const Review = require('../models/reviewModel');
 const Order = require('../models/orderModel');
 const Category = require('../models/categoryModel');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getLogin = (req, res, next) => {
   res.status(200).render('login', {
@@ -26,6 +27,9 @@ exports.getAccount = (req, res, next) => {
 exports.getOverview = catchAsync(async (req, res, next) => {
   const categories = await Category.find();
 
+  if (!categories)
+    return next(new AppError('Sorry no categories found with that name!', 404));
+
   res.status(200).render('overview', {
     title: 'online shopping',
     categories,
@@ -39,6 +43,8 @@ exports.getCategoryProducts = catchAsync(async (req, res, next) => {
   //   const names = el.name.length > 30 ? el.name.slice(1, 30) : el.name;
   //   console.log(names);
   // });
+  if (!category)
+    return next(new AppError('Sorry no category found with that name !', 404));
 
   if (category.products.length == 0) {
     res.status(200).render('empty', {
@@ -55,6 +61,9 @@ exports.getCategoryProducts = catchAsync(async (req, res, next) => {
 exports.getProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   const reviews = await Review.find({ product: req.params.id });
+
+  if (!product)
+    return next(new AppError('Sorry no product found with that name!', 404));
 
   res.status(200).render('product', {
     title: `${product.name}`,
@@ -100,7 +109,7 @@ exports.getForgotPass = (req, res, next) => {
 
 exports.getOrders = catchAsync(async (req, res, next) => {
   const orders = await Order.find({ user: req.user.id }).sort({
-    createdAt: 1,
+    createdAt: -1,
   });
 
   if (orders.length == 0) {

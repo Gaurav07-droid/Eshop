@@ -11,5 +11,5 @@ block Content
                     h3.heading-tertirary
                         span.nameProd #{order.product.name}    
                 .card__details
-                a.btn-view(href=`/api/v1/${order.product.categeory}/product/${order.product.id}`) Buy again
-                a.btn-review(href=`/api/v1/products/${order.product.id}/review`) Rate and review
+                a.btn-view(href=`/${order.product.categeory}/product/${order.product.id}`) Buy again
+                a.btn-review(href=`/products/${order.product.id}/review`) Rate and review

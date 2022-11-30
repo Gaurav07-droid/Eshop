@@ -21,10 +21,10 @@ block Content
         .user-view
             nav.user-view__menu
                 ul.side-nav
-                    +navigation('/api/v1/my-cart','','My cart')
-                    +navigation('/api/v1/my-orders','','My orders')
+                    +navigation('/my-cart','','My cart')
+                    +navigation('/my-orders','','My orders')
                     +navigation('#','','Billing')
-                    +navigation('/api/v1/change-password','','Change password')
+                    +navigation('/change-password','','Change password')
 
                 if user.role==='admin'
                     .admin-nav
