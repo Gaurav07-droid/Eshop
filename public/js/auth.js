@@ -16,7 +16,7 @@ export const login = async (email, password) => {
     if (res.data.status === 'success') {
       showAlert('success', 'Logged in successfully');
       window.setTimeout(() => {
-        window.location.assign('/categories');
+        window.location.assign('/');
       }, 2000);
     }
   } catch (err) {
@@ -59,7 +59,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
     if (res.data.status === 'success') {
       showAlert('success', 'Account created successfully!');
       window.setTimeout(() => {
-        window.location.assign('/categories');
+        window.location.assign('/');
       }, 1500);
     }
   } catch (err) {
@@ -148,7 +148,7 @@ export const resetPassword = async (token, newPassword, passwordConfirm) => {
       showAlert('success', 'Password updated sucessfully!');
 
       window.setTimeout(() => {
-        window.location.assign('/categories');
+        window.location.assign('/');
       }, 2000);
     }
   } catch (err) {
