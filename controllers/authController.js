@@ -31,7 +31,7 @@ const sendSignedToken = function (req, user, statusCode, res) {
       Date.now() + process.env.JWT_Cookie_ExpiresIn * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: req.secure || req.headers('x-forwarded-proto') === 'https',
+    // secure: req.secure || req.headers('x-forwarded-proto') === 'https',
   };
   // if (req.secure || req.headers('x-forwarded-proto') === 'https')
   //   cookieOptions.secure = true;
@@ -133,10 +133,14 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
     );
 
     const currentUser = await User.findById(decoded.id);
-    if (!currentUser) return next();
+    if (!currentUser) {
+      return next();
+    }
 
     //check user change password after the token issued
-    if (currentUser.checkPasswordChange(decoded.iat)) return next();
+    if (currentUser.checkPasswordChange(decoded.iat)) {
+      return next();
+    }
 
     //User in pug coming from here
     res.locals.user = currentUser;

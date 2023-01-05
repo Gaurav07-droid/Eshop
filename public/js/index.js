@@ -38,24 +38,6 @@ const btnRemoveFromCart = document.querySelectorAll('.btn-remove');
 const btnBookProduct = document.getElementById('book-product');
 const reviewBtn = document.getElementById('reviewbtn');
 
-const getSearchResults = async (query) => {
-  try {
-    const res = await axios({
-      method: 'GET',
-      url: `http://127.0.0.1:3000/api/v1/products?name=${query}`,
-    });
-
-    if (res.data.status === 'success' && res.data.data.length > 0) {
-      alert('result fetched');
-      // window.location.assign('/api/v1/home');
-    } else {
-      // window.location.assign('/api/v1/home');
-    }
-  } catch (err) {
-    // console.log(err);
-  }
-};
-
 if (formSearch)
   formSearch.addEventListener('submit', function (e) {
     e.preventDefault();

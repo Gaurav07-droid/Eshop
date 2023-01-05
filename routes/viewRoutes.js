@@ -14,7 +14,6 @@ router.get('/reset-password', viewsController.getResetPass);
 router.use(authController.isLoggedIn);
 
 router.get('/', viewsController.getOverview);
-
 router.get('/:name/products', viewsController.getCategoryProducts);
 router.get('/:category/product/:id', viewsController.getProduct);
 

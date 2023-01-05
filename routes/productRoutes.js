@@ -20,13 +20,12 @@ router
 router
   .route('/')
   .post(
-    authController.protect,
     authController.restrictTo('admin', 'seller'),
     productController.uploadProductImages,
     productController.resizeProductImages,
     productController.createProduct
   )
-  .get(authController.protect, productController.getAllProducts);
+  .get(productController.getAllProducts);
 
 router
   .route('/:id')

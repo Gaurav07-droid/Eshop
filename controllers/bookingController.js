@@ -16,12 +16,10 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   //create checkout session
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
-    success_url: `${req.protocol}://${req.get(
-      'host'
-    )}/api/v1/my-orders?product=${req.params.id}&user=${req.user.id}&price=${
-      product.price
-    }`,
-    cancel_url: `${req.protocol}://${req.get('host')}/api/v1/${
+    success_url: `${req.protocol}://${req.get('host')}/my-orders?product=${
+      req.params.id
+    }&user=${req.user.id}&price=${product.price}`,
+    cancel_url: `${req.protocol}://${req.get('host')}/${
       product.categeory
     }/product/${product.id}`,
     customer_email: req.user.email,
@@ -55,7 +53,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 
 exports.createOrderCheckout = catchAsync(async (req, res, next) => {
   const { product, user, price } = req.query;
-  const url = `${req.protocol}://${req.get('host')}/api/v1/my-orders`;
+  const url = `${req.protocol}://${req.get('host')}/my-orders`;
   if (!product && !user && !price) return next();
 
   const theCustomer = await User.findById(user);
