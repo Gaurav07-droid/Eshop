@@ -20,6 +20,7 @@ router
 router
   .route('/')
   .post(
+    authController.protect,
     authController.restrictTo('admin', 'seller'),
     productController.uploadProductImages,
     productController.resizeProductImages,
